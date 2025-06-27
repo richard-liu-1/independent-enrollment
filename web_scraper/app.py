@@ -2,6 +2,7 @@ import streamlit as st
 import psycopg2
 import pandas as pd
 
+
 # ---------------------
 # 配置 PostgreSQL 连接
 # ---------------------
@@ -21,7 +22,6 @@ import pandas as pd
 # ---------------------
 @st.cache_data(show_spinner=True)
 def load_data():
-    st.success("✅ start to load data")
     try:
         db = st.secrets["database"]
         conn = psycopg2.connect(
@@ -46,8 +46,8 @@ def load_data():
                 s.values[6] AS 数学,
                 s.values[7] AS 专业基础,
                 s.values[8] AS 职业适应性测试
-            FROM school_info si
-            JOIN score s ON si.id = s.school_id
+            FROM public.school_info si
+            JOIN public.score s ON si.id = s.school_id 
             ORDER BY si.name, s.exam_type;
         """
         df = pd.read_sql(query, conn)
@@ -56,6 +56,7 @@ def load_data():
     except Exception as e:
         st.error(f"❌ 数据库连接失败，请检查 Secrets 配置或 Supabase 网络：{e}")
         return pd.DataFrame()  # 空表，避免后续崩溃
+
 
 # ---------------------
 # Streamlit 页面布局
