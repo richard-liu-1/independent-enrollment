@@ -13,12 +13,21 @@ DB_CONFIG = {
     "port": 5432
 }
 
+db_config = st.secrets["database"]
+conn = psycopg2.connect(
+    host=db_config["host"],
+    port=db_config["port"],
+    user=db_config["user"],
+    password=db_config["password"],
+    database=db_config["database"]
+)
+
 # ---------------------
 # 从数据库中加载数据
 # ---------------------
 @st.cache_data(show_spinner=True)
 def load_data():
-    conn = psycopg2.connect(**DB_CONFIG)
+    # conn = psycopg2.connect(**DB_CONFIG)
     query = """
         SELECT
             si.name AS 学校名称,
