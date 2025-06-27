@@ -5,22 +5,16 @@ import pandas as pd
 # ---------------------
 # 配置 PostgreSQL 连接
 # ---------------------
-DB_CONFIG = {
-    "host": "localhost",
-    "database": "independent_enrollment",
-    "user": "postgres",
-    "password": "123456",
-    "port": 5432
-}
+# local
+# DB_CONFIG = {
+#     "host": "localhost",
+#     "database": "independent_enrollment",
+#     "user": "postgres",
+#     "password": "123456",
+#     "port": 5432
+# }
 
-db_config = st.secrets["database"]
-conn = psycopg2.connect(
-    host=db_config["host"],
-    port=db_config["port"],
-    user=db_config["user"],
-    password=db_config["password"],
-    database=db_config["database"]
-)
+# db_config = st.secrets["database"]
 
 # ---------------------
 # 从数据库中加载数据
@@ -28,14 +22,15 @@ conn = psycopg2.connect(
 @st.cache_data(show_spinner=True)
 def load_data():
     try:
-        db_config = st.secrets["database"]
-        conn = psycopg2.connect(
-            host=db_config["host"],
-            port=db_config["port"],
-            user=db_config["user"],
-            password=db_config["password"],
-            database=db_config["database"]
-        )
+        # db_config = st.secrets["database"]
+        # conn = psycopg2.connect(
+        #     host=db_config["host"],
+        #     port=db_config["port"],
+        #     user=db_config["user"],
+        #     password=db_config["password"],
+        #     database=db_config["database"]
+        # )
+        conn = psycopg2.connect(st.secrets["database"]["url"])
         query = """
             SELECT
                 si.name AS 学校名称,
