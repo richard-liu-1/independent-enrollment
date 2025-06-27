@@ -22,15 +22,15 @@ import pandas as pd
 @st.cache_data(show_spinner=True)
 def load_data():
     try:
-        # db_config = st.secrets["database"]
-        # conn = psycopg2.connect(
-        #     host=db_config["host"],
-        #     port=db_config["port"],
-        #     user=db_config["user"],
-        #     password=db_config["password"],
-        #     database=db_config["database"]
-        # )
-        conn = psycopg2.connect(st.secrets["database"]["url"])
+        db = st.secrets["database"]
+        conn = psycopg2.connect(
+            host=db["host"],
+            port=db["port"],
+            user=db["user"],
+            password=db["password"],
+            database=db["database"]
+        )
+        st.success("✅ 成功连接 Supabase（通过 IPv4）")
         query = """
             SELECT
                 si.name AS 学校名称,
