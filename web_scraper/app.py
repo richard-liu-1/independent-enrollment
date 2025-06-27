@@ -21,6 +21,7 @@ import pandas as pd
 # ---------------------
 @st.cache_data(show_spinner=True)
 def load_data():
+    st.success("✅ start to load data")
     try:
         db = st.secrets["database"]
         conn = psycopg2.connect(
